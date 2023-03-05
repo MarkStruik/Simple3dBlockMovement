@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://nlhrji4ra7xy"]
+
+[ext_resource type="Script" path="res://floor_tile.gd" id="1_lk07h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tik8g"]
+transparency = 1
+albedo_color = Color(0.0823529, 0.215686, 0.92549, 0.670588)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_frqyo"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_x0ric"]
+height = 0.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t5bsk"]
+size = Vector3(1, 0, 1)
+
+[node name="target1" type="StaticBody3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.00340813, 0)
+script = ExtResource("1_lk07h")
+IsActive = null
+IsSelected = null
+SelectedMaterial = SubResource("StandardMaterial3D_tik8g")
+MeshType = SubResource("CylinderMesh_frqyo")
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_x0ric")
+
+[node name="topCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00269267, 0, -0.00321269)
+shape = SubResource("BoxShape3D_t5bsk")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="property_list_changed" from="." to="." method="_on_property_list_changed"]

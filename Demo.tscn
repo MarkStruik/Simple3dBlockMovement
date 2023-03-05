@@ -1,0 +1,86 @@
+[gd_scene load_steps=21 format=3 uid="uid://dog5w5yp72aqw"]
+
+[ext_resource type="Script" path="res://Demo.gd" id="1_kt6ec"]
+[ext_resource type="PackedScene" uid="uid://nlhrji4ra7xy" path="res://floor_tile.tscn" id="2_8ahqd"]
+[ext_resource type="ArrayMesh" uid="uid://csgbywgancdeg" path="res://small_pawn_open.res" id="3_4a2pe"]
+[ext_resource type="Script" path="res://pawnDetails.gd" id="3_7pgid"]
+[ext_resource type="ArrayMesh" uid="uid://dd22v4sermqer" path="res://small_pawn.res" id="4_eyk8y"]
+[ext_resource type="Material" uid="uid://cphu2rmlqydap" path="res://selected_mat.tres" id="5_ifweo"]
+[ext_resource type="Material" uid="uid://djmk3j4ok7nyc" path="res://dark_mat_pawn.tres" id="5_rfph4"]
+[ext_resource type="Material" uid="uid://fslnatq11mm0" path="res://light_mat_pawn.tres" id="6_56y84"]
+[ext_resource type="ArrayMesh" uid="uid://b2fsgnmpvcqaa" path="res://small_pawn_round.res" id="6_84pk1"]
+[ext_resource type="ArrayMesh" uid="uid://bbqyo52fdc176" path="res://small_pawn_round_open.res" id="7_aoisa"]
+[ext_resource type="ArrayMesh" uid="uid://8oe6odfhfrfq" path="res://large_pawn_round.res" id="8_3ps2q"]
+[ext_resource type="ArrayMesh" uid="uid://brlq5wkpexcy8" path="res://large_pawn_open.res" id="8_v5chj"]
+[ext_resource type="ArrayMesh" uid="uid://dub0cunbvt7yf" path="res://large_pawn_round_open.res" id="9_it3u8"]
+[ext_resource type="ArrayMesh" uid="uid://dslctxy8065mw" path="res://large_pawn.res" id="9_obl17"]
+
+[sub_resource type="Resource" id="Resource_35yuh"]
+script = ExtResource("3_7pgid")
+type = 0
+size = 0
+kind = 0
+color = 0
+
+[sub_resource type="Environment" id="Environment_77qpn"]
+background_mode = 2
+background_color = Color(0.270588, 0.270588, 0.270588, 1)
+ambient_light_source = 3
+tonemap_white = 5.4
+ssao_enabled = true
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cy6wk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fkhfp"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4bx8b"]
+material = SubResource("StandardMaterial3D_fkhfp")
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_sg5vu"]
+
+[node name="Root" type="Node3D"]
+script = ExtResource("1_kt6ec")
+targetScene = ExtResource("2_8ahqd")
+selectedMaterial = ExtResource("5_ifweo")
+pawns = Array[ExtResource("3_7pgid")]([SubResource("Resource_35yuh")])
+PawnColors = Array[Material]([ExtResource("5_rfph4"), ExtResource("6_56y84")])
+PawnMesh = Array[Mesh]([ExtResource("4_eyk8y"), ExtResource("3_4a2pe"), ExtResource("9_obl17"), ExtResource("8_v5chj"), ExtResource("6_84pk1"), ExtResource("7_aoisa"), ExtResource("8_3ps2q"), ExtResource("9_it3u8")])
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.809017, -0.509037, 0.293893, 0, 0.5, 0.866025, -0.587785, -0.700629, 0.404508, 0, 0, 0)
+light_color = Color(0.972549, 0.980392, 0.890196, 1)
+light_energy = 1.238
+shadow_enabled = true
+shadow_opacity = 0.73
+directional_shadow_fade_start = 0.252
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.515038, 0.857167, 0, -0.857167, 0.515038, 6.132, 23.598, 16.764)
+keep_aspect = 0
+doppler_tracking = 2
+current = true
+fov = 40.6
+near = 0.001
+far = 100.33
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_77qpn")
+
+[node name="floor" type="StaticBody3D" parent="."]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 5.99388, -0.0546231, 0)
+physics_material_override = SubResource("PhysicsMaterial_cy6wk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floor"]
+transform = Transform3D(9.94089, 0, 0, 0, 2.62714, 0, 0, 0, 9.96761, 0, 0, 0)
+mesh = SubResource("PlaneMesh_4bx8b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor"]
+shape = SubResource("WorldBoundaryShape3D_sg5vu")
+
+[node name="tiles" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="pawns" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.96856)

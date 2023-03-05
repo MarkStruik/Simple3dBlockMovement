@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://cmimwjaw28s5m"]
+
+[ext_resource type="Script" path="res://pawn.gd" id="1_avqyi"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_q5wrs"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_x0ric"]
+height = 0.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t5bsk"]
+size = Vector3(1, 0.5, 1)
+
+[node name="target1" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_q5wrs")
+script = ExtResource("1_avqyi")
+IsActive = true
+metadata/_edit_group_ = true
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_x0ric")
+
+[node name="topCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23317, 0)
+shape = SubResource("BoxShape3D_t5bsk")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
